@@ -1,0 +1,6 @@
+= resampling
+
+Describe your project here
+
+:include:resampling.rdoc
+
