@@ -8,7 +8,8 @@ describe Image do
 
   describe "#load" do
     it "load a file" do
-      image = Image.new(filename)
+      image = Image.new
+      image.load( filename )
       image_expected = ChunkyPNG::Image.from_file(filename)
       image.data.eql?(image_expected).must_equal(true)
     end
@@ -16,7 +17,8 @@ describe Image do
 
   describe "#save" do
     it "save a file" do
-      image = Image.new(filename)
+      image = Image.new
+      image.load( filename )
       image.save("test.png")
       image_expected = ChunkyPNG::Image.from_file("test.png")
       image.data.eql?(image_expected).must_equal(true)
@@ -25,7 +27,8 @@ describe Image do
 
   describe "#each_coordinates" do
     it "iterate through pixel coordinates" do
-      image = Image.new(filename)
+      image = Image.new
+      image.load( filename )
       image_expected = ChunkyPNG::Image.from_file(filename)
       image.each_coordinates do |c|
           image_expected.get_pixel(c[0],c[1]).must_equal(image.data[c[0],c[1]])
@@ -35,8 +38,8 @@ describe Image do
 
   describe "#set_pixel" do
     it "set_pixel" do
-      image = Image.new(filename)
-      #image.load(filename)
+      image = Image.new
+      image.load( filename )
       newcolor = ChunkyPNG::Color.rgb(1,2,3)
       image.set_pixel( [0,0], newcolor )
       image.data.pixels[0].must_equal(newcolor)
@@ -45,8 +48,8 @@ describe Image do
 
   describe "#interpolate" do
     it "interpolate non integer pixel" do
-      image = Image.new(filename)
-      #image.load(filename)
+      image = Image.new
+      image.load( filename )
       color = image.interpolate( [0.5,0.5] )
       image_expected = ChunkyPNG::Image.from_file(filename)
       neighbor = [  ChunkyPNG::Color.to_truecolor_bytes( image_expected.get_pixel( 0, 0 ) ),
