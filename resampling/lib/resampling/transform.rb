@@ -11,7 +11,8 @@ class Transform
   end
 
   def transform_point( coord )
-    @matrix * Matrix[ coord + [1] ].transpose
+    homogenous_coord = @matrix * Matrix[ coord + [1] ].transpose
+    [ homogenous_coord[0,0], homogenous_coord[1,0] ]
   end
 
   private
