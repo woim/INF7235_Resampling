@@ -1,12 +1,21 @@
 class Image
   attr_reader :data
 
-  def initialize( filename )
+  def initialize
+    @data = nil
+  end
+
+  def load( filename )
     @data = ChunkyPNG::Image.from_file(filename)
   end
 
   def save( filename )
+    fail "No image to save" unless @data != nil
     @data.save(filename)
+  end
+
+  def create_image( width, height )
+    @data = ChunkyPNG::Image.new( width, height, ChunkyPNG::Color::TRANSPARENT)
   end
 
   def each_coordinates
@@ -22,7 +31,7 @@ class Image
   end
 
   def interpolate( coord )
-    return 0 if point_outside?( coord )
+    return 0 unless point_outside?( coord )
     neighbors = get_neighbors( coord )
     ChunkyPNG::Color.rgb( bilinear_interpolation( coord, neighbors.map { |e| e[0] } ), \
                           bilinear_interpolation( coord, neighbors.map { |e| e[1] } ), \
@@ -32,10 +41,7 @@ class Image
   private
 
   def point_outside?( coord )
-    return true if( coord.any? { |e| e < 0 } )
-    return true if( coord[0] > @data.width )
-    return true if( coord[1] > @data.height )
-    false
+    coord[0] >= 0.0 && coord[0] < @data.height-1 && coord[1] >= 0.0 && coord[1] < @data.width - 1
   end
 
   def get_neighbors( coord )
@@ -57,7 +63,9 @@ class Image
                                 [neighbors[2], neighbors[3]] ]
     y_vector = Matrix[ [1-y, y] ].transpose
     value = x_vector * neighbors_matrix * y_vector
-    value[0,0].to_int
+    color_canal = value[0,0].to_int
+    color_canal = ( color_canal > 255 ) ? 255 : color_canal
+    color_canal = ( color_canal < 0 ) ? 0 : color_canal
   end
 
 end

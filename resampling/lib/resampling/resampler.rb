@@ -1,5 +1,5 @@
 class Resampler
-  attr_reader   :filename
+  attr_accessor :source_filename
   attr_accessor :image_source
   attr_accessor :image_destination
   attr_accessor :transform
@@ -18,12 +18,8 @@ class Resampler
     end
   end
 
-  private
-
   def create_images
-    @image_source = Image.new
-    @image_destination = Image.new
-    @image_source.load(@filename)
+    @image_source.load(@source_filename)
     @image_destination.create_image( @image_source.data.width, @image_source.data.height )
   end
 
