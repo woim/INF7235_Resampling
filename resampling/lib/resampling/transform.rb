@@ -1,18 +1,18 @@
 require 'matrix'
 
 class Transform
-  attr_accessor :rotation
-  attr_accessor :translation
-  attr_reader   :matrix
+  attr_reader :rotation
+  attr_reader :translation
+  attr_reader :matrix
 
-  def initialize(rotation, translation)
+  def initialize( rotation, translation )
     @matrix = Matrix.identity(3)
     @rotation = deg_to_rad( rotation )
     @translation = translation
     compute_matrix
   end
 
-  def transform_point(coord)
+  def transform_point( coord )
     @matrix * Matrix[ coord + [1] ].transpose
   end
 
