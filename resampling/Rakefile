@@ -4,6 +4,30 @@ require 'rubygems/package_task'
 require 'rdoc/task'
 require 'cucumber'
 require 'cucumber/rake/task'
+
+########################################################################
+# Description tasks
+########################################################################
+task :default => [:run]
+
+task :tests => [:unit_tests]
+
+task :unit_tests => [:test_image]
+
+task :run do
+  sh %{bundle exec bin/resampling}
+end
+########################################################################
+
+
+########################################################################
+# Test Unitaire
+########################################################################
+task :test_image do
+  sh %{rake test TEST=test/test_image}
+end
+########################################################################
+
 Rake::RDocTask.new do |rd|
   rd.main = "README.rdoc"
   rd.rdoc_files.include("README.rdoc","lib/**/*.rb","bin/**/*")

@@ -1,4 +1,4 @@
-class resampler
+class Resampler
   attr_accessor :image
   attr_accessor :transform
   attr_accessor :interpolator

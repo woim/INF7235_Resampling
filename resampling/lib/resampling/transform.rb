@@ -1,4 +1,4 @@
-class transform
+class Transform
   attr_accessor :rotation
   attr_accessor :translation
   attr_reader   :matrix

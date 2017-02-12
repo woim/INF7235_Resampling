@@ -1,24 +1,24 @@
-class image
-  attr_reader :image
+class Image
+  attr_reader :data
 
   def load(filename)
-    image = ChunkyPNG::Image.from_file(filename)
+    @data = ChunkyPNG::Image.from_file(filename)
   end
 
   def save(filename)
-    image.save(filename)
+    @data.save(filename)
   end
 
-  def pixels_coordinates
-    image.height.times do |i|
-      image.width.times do |j|
+  def each_coordinates
+    @data.height.times do |i|
+      @data.width.times do |j|
         yield [i,j]
       end
     end
   end
 
   def set_pixel( coord, color )
-    image.set_pixel( coord[0], coord[1], color)
+    @data.set_pixel( coord[0], coord[1], color)
   end
-  
+
 end
