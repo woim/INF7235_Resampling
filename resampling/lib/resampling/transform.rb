@@ -1,5 +1,3 @@
-require 'matrix'
-
 class Transform
   attr_reader :rotation
   attr_reader :translation
