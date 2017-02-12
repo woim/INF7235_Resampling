@@ -1,13 +1,11 @@
-require 'matrix'
-
 class Image
   attr_reader :data
 
-  def load(filename)
+  def initialize( filename )
     @data = ChunkyPNG::Image.from_file(filename)
   end
 
-  def save(filename)
+  def save( filename )
     @data.save(filename)
   end
 
@@ -26,8 +24,6 @@ class Image
   def interpolate( coord )
     return 0 if point_outside?( coord )
     neighbors = get_neighbors( coord )
-    puts neighbors.to_s
-    puts neighbors.map { |e| e[0] }.to_s
     ChunkyPNG::Color.rgb( bilinear_interpolation( coord, neighbors.map { |e| e[0] } ), \
                           bilinear_interpolation( coord, neighbors.map { |e| e[1] } ), \
                           bilinear_interpolation( coord, neighbors.map { |e| e[2] } ) )
