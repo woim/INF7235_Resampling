@@ -12,7 +12,8 @@ task :default => [:run]
 
 task :tests => [:unit_tests]
 
-task :unit_tests => [:test_image]
+task :unit_tests => [ :test_image,
+                      :test_transform]
 
 task :run do
   sh %{bundle exec bin/resampling}
@@ -25,6 +26,9 @@ end
 ########################################################################
 task :test_image do
   sh %{rake test TEST=test/test_image}
+end
+task :test_transform do
+  sh %{rake test TEST=test/test_transform}
 end
 ########################################################################
 
