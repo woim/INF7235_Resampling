@@ -11,38 +11,49 @@ end
 
 include GLI::App
 
-program_desc 'Describe your application here'
+program_desc 'Program to resample 2D images with rigid transformation'
 
 version Resampling::VERSION
 
 subcommand_option_handling :normal
 arguments :strict
 
-desc 'Describe some switch here'
-switch [:s,:switch]
+desc 'Select input image file (must be png file)'
+arg_name 'filename'
+flag [:i,:input]
 
-desc 'Describe some flag here'
-default_value 'the default'
-arg_name 'The name of the argument'
-flag [:f,:flagname]
+desc 'Output the resampling process into file (must be png file)'
+arg_name 'filename'
+flag [:o,:output]
+
+desc 'Rotation of the rigid transform'
+default_value '0'
+arg_name 'rotation'
+flag [:r,:rotation]
+
+desc 'Translation of the rigid transform'
+default_value '0,0'
+arg_name 'translation'
+flag [:t,:translation], :type => Array
 
 desc 'Describe sequential here'
 arg_name 'Describe arguments to sequential here'
 command :sequential do |c|
-  c.desc 'Describe a switch to sequential'
-  c.switch :s
-
-  c.desc 'Describe a flag to sequential'
-  c.default_value 'default'
-  c.flag :f
   c.action do |global_options,options,args|
 
-    # Your command logic here
-     
-    # If you have any errors, just raise them
-    # raise "that command made no sense"
+    rotation = global_options[:rotation].to_f
+    translation = global_options[:translation].map { |e| e.to_f }
 
-    puts "sequential command ran"
+    resampler = Resampler.create do |r|
+        r.source_filename = global_options[:input]
+        r.image_source = Image.new
+        r.image_destination = Image.new
+        r.transform = Transform.new(rotation,translation)
+    end
+
+    resampler.process
+    resampler.image_destination.save(global_options[:output])
+
   end
 end
 
