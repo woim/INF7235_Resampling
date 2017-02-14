@@ -1,4 +1,4 @@
 source 'https://rubygems.org'
 gemspec
-require 'chunky_png'
-require 'matrix'
+gem 'chunky_png'
+gem 'matrix'
