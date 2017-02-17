@@ -26,7 +26,8 @@ end
 # Test Unitaire
 ########################################################################
 task :test_image do
-  sh %{rake test TEST=test/test_image}
+  #sh %{rake test TEST=test/test_image}
+  sh %{bundle exec rake test TEST=test/test_image}
 end
 task :test_transform do
   sh %{rake test TEST=test/test_transform}
