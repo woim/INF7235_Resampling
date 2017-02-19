@@ -1,4 +1,4 @@
-gem 'minitest', '=5.4.3'
+gem 'minitest'
 require 'minitest/autorun'
 require 'minitest/spec'
 require 'minitest/mock'

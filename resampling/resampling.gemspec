@@ -20,7 +20,6 @@ spec = Gem::Specification.new do |s|
   s.add_development_dependency('rdoc')
   s.add_development_dependency('aruba')
   s.add_runtime_dependency('gli','2.14.0')
-  s.add_runtime_dependency('matrix')
   s.add_runtime_dependency('chunky_png')
   s.add_runtime_dependency('minitest')
 end
