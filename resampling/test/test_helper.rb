@@ -2,6 +2,8 @@ gem 'minitest'
 require 'minitest/autorun'
 require 'minitest/spec'
 require 'minitest/mock'
+require 'matrix'
+require 'chunky_png'
 
 class Object
   def _describe( test )

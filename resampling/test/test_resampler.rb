@@ -1,6 +1,5 @@
 require 'test_helper'
 require 'resampling'
-require 'chunky_png'
 
 filename = "test/monkey.png"
 

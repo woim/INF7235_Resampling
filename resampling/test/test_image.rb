@@ -1,7 +1,5 @@
 require 'test_helper'
 require 'resampling'
-require 'chunky_png'
-require 'matrix'
 
 filename = "test/monkey.png"
 

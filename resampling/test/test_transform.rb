@@ -1,6 +1,5 @@
 require 'test_helper'
 require 'resampling'
-require 'matrix'
 
 describe Transform do
 
