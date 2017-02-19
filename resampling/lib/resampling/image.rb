@@ -1,5 +1,3 @@
-require 'matrix'
-
 class Image
   attr_reader :data
 
