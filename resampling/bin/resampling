@@ -2,12 +2,9 @@
 require 'gli'
 begin # XXX: Remove this begin/rescue before distributing your app
 require 'resampling'
-rescue LoadError
-  STDERR.puts "In development, you need to use `bundle exec bin/resampling` to run your app"
-  STDERR.puts "At install-time, RubyGems will make sure lib, etc. are in the load path"
-  STDERR.puts "Feel free to remove this message from bin/resampling now"
-  exit 64
 end
+
+require 'lib/performance/time_tracking'
 
 include GLI::App
 
@@ -17,6 +14,9 @@ version Resampling::VERSION
 
 subcommand_option_handling :normal
 arguments :strict
+
+desc 'Enables the time tracking mode'
+switch :tt  , :default_value => true
 
 desc 'Select input image file (must be png file)'
 arg_name 'filename'
@@ -74,6 +74,8 @@ command :parallel_data do |c|
 end
 
 pre do |global,command,options,args|
+  trackTime = global[:tt]
+  TimeTracking.load if trackTime
   # Pre logic here
   # Return true to proceed; false to abort and not call the
   # chosen command
@@ -83,6 +85,8 @@ pre do |global,command,options,args|
 end
 
 post do |global,command,options,args|
+  trackTime = global[:tt]
+  TimeTracking.end if trackTime
   # Post logic here
   # Use skips_post before a command to skip this
   # block on that command only
