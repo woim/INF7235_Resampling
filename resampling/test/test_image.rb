@@ -24,12 +24,12 @@ describe Image do
     end
   end
 
-  describe "#each_coordinates" do
+  describe "#samples" do
     it "iterate through pixel coordinates" do
       image = Image.new
       image.load( filename )
       image_expected = ChunkyPNG::Image.from_file(filename)
-      image.each_coordinates do |c|
+      image.samples.each do |c|
           image_expected.get_pixel(c[0],c[1]).must_equal(image.data[c[0],c[1]])
       end
     end

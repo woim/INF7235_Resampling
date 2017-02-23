@@ -11,8 +11,15 @@ class Resampler
     resampler
   end
 
-  def process()
-    @image_destination.each_coordinates do |p|
+  def process
+    @image_destination.samples.each do |p|
+      src_coord = @transform.transform_point(p)
+      @image_destination.set_pixel( p, @image_source.interpolate( src_coord ) )
+    end
+  end
+
+  def process_loop
+    @image_destination.samples.each do |p|
       src_coord = @transform.transform_point(p)
       @image_destination.set_pixel( p, @image_source.interpolate( src_coord ) )
     end
