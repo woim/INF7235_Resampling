@@ -61,7 +61,20 @@ desc 'Describe parallel_loop here'
 arg_name 'Describe arguments to parallel_loop here'
 command :parallel_loop do |c|
   c.action do |global_options,options,args|
-    puts "parallel_loop command ran"
+
+    rotation = global_options[:rotation].to_f
+    translation = global_options[:translation].map { |e| e.to_f }
+
+    resampler = Resampler.create do |r|
+        r.source_filename = global_options[:input]
+        r.image_source = Image.new
+        r.image_destination = Image.new
+        r.transform = Transform.new(rotation,translation)
+    end
+
+    resampler.process_loop
+    resampler.image_destination.save(global_options[:output])
+
   end
 end
 

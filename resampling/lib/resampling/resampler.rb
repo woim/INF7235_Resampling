@@ -19,7 +19,7 @@ class Resampler
   end
 
   def process_loop
-    @image_destination.samples.each do |p|
+    @image_destination.samples.peach do |p|  #( nb_threads : 2 ) PRuby.nb_threads
       src_coord = @transform.transform_point(p)
       @image_destination.set_pixel( p, @image_source.interpolate( src_coord ) )
     end
