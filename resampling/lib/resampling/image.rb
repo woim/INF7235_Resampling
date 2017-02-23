@@ -1,12 +1,15 @@
 class Image
   attr_reader :data
+  attr_reader :samples
 
   def initialize
     @data = nil
+    @samples = []
   end
 
   def load( filename )
     @data = ChunkyPNG::Image.from_file(filename)
+    create_samples
   end
 
   def save( filename )
@@ -16,18 +19,11 @@ class Image
 
   def create_image( width, height )
     @data = ChunkyPNG::Image.new( width, height, ChunkyPNG::Color::TRANSPARENT)
-  end
-
-  def each_coordinates
-    @data.height.times do |i|
-      @data.width.times do |j|
-        yield [i,j]
-      end
-    end
+    create_samples
   end
 
   def set_pixel( coord, color )
-    @data.set_pixel( coord[0], coord[1], color)
+    @data.set_pixel( coord[0], coord[1], color )
   end
 
   def interpolate( coord )
@@ -39,6 +35,14 @@ class Image
   end
 
   private
+
+  def create_samples
+    @data.height.times do |i|
+      @data.width.times do |j|
+        @samples.push( [i,j] )
+      end
+    end
+  end
 
   def point_outside?( coord )
     coord[0] >= 0.0 && coord[0] < @data.height-1 && coord[1] >= 0.0 && coord[1] < @data.width - 1
