@@ -40,4 +40,19 @@ describe Resampler do
     end
   end
 
+  describe "#process_loop" do
+    it "verify that we catually properly resampler" do
+      @resampler = Resampler.create do |r|
+          r.source_filename = filename
+          r.image_source = Image.new
+          r.image_destination = Image.new
+          r.transform = Transform.new(5,[0,0])
+      end
+      @resampler.process_loop
+      image_expected = ChunkyPNG::Image.from_file( filename )
+      @resampler.image_destination.save("test_resampled.png")
+      @resampler.image_destination.eql?(image_expected).must_equal(false)
+    end
+  end
+
 end

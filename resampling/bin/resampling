@@ -4,7 +4,7 @@ begin # XXX: Remove this begin/rescue before distributing your app
 require 'resampling'
 end
 
-require 'lib/performance/time_tracking'
+#require 'lib/performance/time_tracking'
 
 include GLI::App
 
