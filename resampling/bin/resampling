@@ -4,8 +4,6 @@ begin # XXX: Remove this begin/rescue before distributing your app
 require 'resampling'
 end
 
-#require 'lib/performance/time_tracking'
-
 include GLI::App
 
 program_desc 'Program to resample 2D images with rigid transformation'
