@@ -22,5 +22,4 @@ spec = Gem::Specification.new do |s|
   s.add_runtime_dependency('gli','2.14.0')
   s.add_runtime_dependency('chunky_png')
   s.add_runtime_dependency('minitest')
-  s.add_runtime_dependency('pruby')
 end
