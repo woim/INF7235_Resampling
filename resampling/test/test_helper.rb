@@ -4,8 +4,6 @@ require 'minitest/spec'
 require 'minitest/mock'
 require 'matrix'
 require 'chunky_png'
-require 'pruby'
-
 
 class Object
   def _describe( test )
