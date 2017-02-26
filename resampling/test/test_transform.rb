@@ -1,4 +1,5 @@
-require 'test_helper'
+$LOAD_PATH.unshift('lib')
+require_relative 'test_helper'
 require 'resampling'
 
 describe Transform do

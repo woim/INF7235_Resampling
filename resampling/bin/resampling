@@ -1,4 +1,7 @@
 #!/usr/bin/env ruby
+
+$LOAD_PATH.unshift('lib')
+
 require 'gli'
 begin # XXX: Remove this begin/rescue before distributing your app
 require 'resampling'
