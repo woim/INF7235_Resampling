@@ -4,6 +4,7 @@ class Resampler
   attr_accessor :image_destination
   attr_accessor :transform
 	attr_accessor :nb_threads
+  attr_reader   :slice_index
 
   def self.create
     resampler = new
@@ -19,13 +20,17 @@ class Resampler
   def process_pcall( nb_threads = PRuby.nb_threads )
 	  @nb_threads = ( nb_threads > @image_destination.samples.size ) ? \
                     @iage_destination.smaples.size : nb_threads  
+    define_slice_index
     puts "nb_threads: " + @nb_threads.to_s 
     puts "size image " + @image_destination.samples.size.to_s
-    PRuby.pcall(	0...@nb_threads, 
-						     	lambda do |t|
-										process( define_subset( t ) )
-	 	     					end
-		   				 )
+    puts @slice_index.to_s 
+    #PRuby.pcall(	0...@nb_threads, 
+		#				     	lambda do |t|
+    #                index = @slice_index[t]
+  	#                samples = @image_destination.samples.slice( index[0],index[1] )
+	  #								process( samples )
+	 	#     					end
+		#   				 )
   end
 
   def create_images
@@ -42,12 +47,16 @@ class Resampler
     end 
 	end
 
-	def define_subset( index_thread )
-		remainder = @image_destination.samples.size % @nb_threads 
-    length = ( @image_destination.samples.size / @nb_threads ) - 1
-		start = index_thread*(length+1)
-	  puts remainder.to_s  + " " + index_thread.to_s + " " + start.to_s + " " + length.to_s
-  	@image_destination.samples.slice(start,length)
+	def define_slice_index
+ 	  remainder = @image_destination.samples.size % @nb_threads
+    length = ( @image_destination.samples.size / @nb_threads )
+    (0...@nb_threads).each do |t|
+		  length += 1 if remainder != 0
+      start = t*(length+1)
+      @slice_index.push( [start,lenghth] )
+      remainder -= 1
+    end
+	    #puts remainder.to_s  + " " + index_thread.to_s + " " + start.to_s + " " + length.to_s
 	end
 
 end
