@@ -21,16 +21,13 @@ class Resampler
 	  @nb_threads = ( nb_threads > @image_destination.samples.size ) ? \
                     @iage_destination.smaples.size : nb_threads  
     define_slice_index
-    puts "nb_threads: " + @nb_threads.to_s 
-    puts "size image " + @image_destination.samples.size.to_s
-    puts @slice_index.to_s 
-    #PRuby.pcall(	0...@nb_threads, 
-		#				     	lambda do |t|
-    #                index = @slice_index[t]
-  	#                samples = @image_destination.samples.slice( index[0],index[1] )
-	  #								process( samples )
-	 	#     					end
-		#   				 )
+    PRuby.pcall(	0...@nb_threads, 
+						     	lambda do |t|
+                    index = @slice_index[t]
+  	                samples = @image_destination.samples.slice( index[0],index[1] )
+	  								process( samples )
+	 	     					end
+		   				 )
   end
 
   def create_images
@@ -48,15 +45,17 @@ class Resampler
 	end
 
 	def define_slice_index
+    @slice_index = []
  	  remainder = @image_destination.samples.size % @nb_threads
-    length = ( @image_destination.samples.size / @nb_threads )
+    length = @image_destination.samples.size / @nb_threads 
+    start = 0
     (0...@nb_threads).each do |t|
-		  length += 1 if remainder != 0
-      start = t*(length+1)
-      @slice_index.push( [start,lenghth] )
-      remainder -= 1
+		  size = length
+      size += 1 if remainder > 0
+      @slice_index.push( [start,size] )
+      start += size
+      remainder -= 1 if remainder > 0
     end
-	    #puts remainder.to_s  + " " + index_thread.to_s + " " + start.to_s + " " + length.to_s
 	end
 
 end
