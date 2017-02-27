@@ -38,7 +38,7 @@ TRANSLATION = [20, 10]
 # d'acceleration.
 ###############################################################
 
-METHODES = ['process_sequential', 'process_pcall', 'process_peach', 'process_peach_dynamic']
+METHODES = ['process_pcall', 'process_peach', 'process_peach_dynamic']
 
 ###############################################################
 # Execution repetitive pour calcul de temps moyen.
