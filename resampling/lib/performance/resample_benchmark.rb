@@ -24,7 +24,7 @@ end
 # - TAILLE [Fixnum] Taille du tableau a generer et traiter
 #
 IMAGES = ['image_small.png', 'image_medium.png', 'image_large.png']
-NB_THREADS = [8,16,32,64,128]
+NB_THREADS = [8]
 
 ###############################################################
 # Nombre de fois ou on repete l'execution.
@@ -79,7 +79,7 @@ largeur = (METHODES.map(&:size).max || 4)+ 3
 ["nb.th.", "seq", *METHODES].each do |x|
   print_file "#{x},"
 end
-puts
+print_file '\r\n'
 
 resampler = Resampler.create do |r|
   r.source_filename = './image_small.png'
@@ -106,5 +106,7 @@ NB_THREADS.each do |nb_threads|
     print "#{temps_par},"
 
   end
-  puts
+  print_file '\r\n'
 end
+
+FILE_HANDLE.close()
