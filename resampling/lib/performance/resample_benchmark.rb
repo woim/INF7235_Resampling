@@ -2,14 +2,14 @@ require 'benchmark'
 require_relative 'time_tracking'
 require_relative '../resampling/resampler'
 require_relative '../resampling'
-$file = nil
 
-File.open("benchmark_result.csv", 'w') { |f| $file = f }
-
+filename='./benchmark_result.csv'
+File.open(filename)
+FILE_HANDLE = File.open(filename)
 
 def print_file(string)
   print string
-  $file.write(string)
+  FILE_HANDLE.write(string)
 end
 
 #
