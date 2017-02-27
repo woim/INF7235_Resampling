@@ -27,11 +27,15 @@ class Image
   end
 
   def interpolate( coord )
-    return 0 unless point_outside?( coord )
+    return 0 unless point_inside?( coord )
     neighbors = get_neighbors( coord )
     ChunkyPNG::Color.rgb( bilinear_interpolation( coord, neighbors.map { |e| e[0] } ), \
                           bilinear_interpolation( coord, neighbors.map { |e| e[1] } ), \
                           bilinear_interpolation( coord, neighbors.map { |e| e[2] } ) )
+  end
+
+  def point_inside?( coord )
+    coord[0] >= 0.0 && coord[0] < @data.height-1 && coord[1] >= 0.0 && coord[1] < @data.width - 1
   end
 
   private
@@ -42,10 +46,6 @@ class Image
         @samples.push( [i,j] )
       end
     end
-  end
-
-  def point_outside?( coord )
-    coord[0] >= 0.0 && coord[0] < @data.height-1 && coord[1] >= 0.0 && coord[1] < @data.width - 1
   end
 
   def get_neighbors( coord )

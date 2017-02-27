@@ -133,6 +133,30 @@ command :parallel_peach_dynamic do |c|
   end
 end
 
+desc 'Describe parallel_reduced_list here'
+arg_name 'Describe arguments to parallel_reduced_list here'
+command :parallel_reduced_list_dynamic do |c|
+  c.desc 'Specify the number of threads'
+  c.flag [:n,:nb_threads]
+
+  c.action do |global_options,options,args|
+
+    rotation = global_options[:rotation].to_f
+    translation = global_options[:translation].map { |e| e.to_f }
+    nb_threads = ( options[:nb_threads].to_i == 0 ) ? PRuby.nb_threads : options[:nb_threads].to_i 
+    
+    resampler = Resampler.create do |r|
+        r.source_filename = global_options[:input]
+        r.image_source = Image.new
+        r.image_destination = Image.new
+        r.transform = Transform.new(rotation,translation)
+    end
+
+    resampler.process_reduced_list( nb_threads )
+    resampler.image_destination.save(global_options[:output])
+
+  end
+end
 
 pre do |global,command,options,args|
   trackTime = global[:tt]

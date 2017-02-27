@@ -23,7 +23,7 @@ class Resampler
     PRuby.pcall(	0...@nb_threads, 
 						     	lambda do |t|
                     index = @slice_index[t]
-  	                samples = @image_destination.samples.slice( index[0],index[1] )
+  	                samples = @image_destination.samples.slice( index[0], index[1] )
 	  								process( samples )
 	 	     					end
 		   				 ) 
@@ -41,6 +41,23 @@ class Resampler
     image_destination.samples.peach( dynamic: granularity ) do |s|
       interpolate( s )
     end
+  end
+
+  def process_reduced_list( nb_threads = PRuby.nb_threads )
+    set_nb_threads( nb_threads )
+    set_slices_index
+    reduced_list = Array.new(@nb_threads) 
+    PRuby.pcall(	0...@nb_threads, 
+						     	lambda do |t|
+                    index = @slice_index[t]
+  	                samples = @image_destination.samples.slice( index[0], index[1] )
+	  								reduced_list[t] = select_pixels( samples ) 
+	 	     					end
+		   				 )  
+    reduced_list.peach( dynamic: true ) do |list_pixels|
+      puts 'reduced_list size: ' + list_pixels.size.to_s
+      process( list_pixels )
+    end  
   end
 
   def create_images
@@ -83,4 +100,12 @@ class Resampler
     end
 	end
 
+  def select_pixels( array_pixels )
+    pixels_selected = []
+    array_pixels.each do |p|
+      src_coord = @transform.transform_point( p )
+      puts src_coord.to_s + ' ' + @image_source.point_inside?( src_coord ).to_s
+      pixels_selected.push( p ) if @image_source.point_inside?( src_coord )
+    end
+  end
 end

@@ -71,7 +71,22 @@ describe Resampler do
     end
   end
 
-  describe "#process_peach_dynamic" do
+#  describe "#process_peach_dynamic" do
+#    it "verify that we catually properly resampler" do
+#      @resampler = Resampler.create do |r|
+#          r.source_filename = filename
+#          r.image_source = Image.new
+#          r.image_destination = Image.new
+#          r.transform = Transform.new(5,[0,0])
+#      end
+#      @resampler.process_peach_dynamic
+#      image_expected = ChunkyPNG::Image.from_file( filename )
+#      @resampler.image_destination.save("test_resampled.png")
+#      @resampler.image_destination.eql?(image_expected).must_equal(false)
+#    end
+#  end
+
+  describe "#process_reduced_list" do
     it "verify that we catually properly resampler" do
       @resampler = Resampler.create do |r|
           r.source_filename = filename
@@ -79,7 +94,7 @@ describe Resampler do
           r.image_destination = Image.new
           r.transform = Transform.new(5,[0,0])
       end
-      @resampler.process_peach_dynamic
+      @resampler.process_reduced_list
       image_expected = ChunkyPNG::Image.from_file( filename )
       @resampler.image_destination.save("test_resampled.png")
       @resampler.image_destination.eql?(image_expected).must_equal(false)
