@@ -84,11 +84,11 @@ end
 # On mesure et on imprime le temps des diverses versions.
 NB_THREADS.each do |nb_threads|
   print " %#{largeur}d" % nb_threads
-  
+
   methode = "process_sequential"
 
   # On execute la version sequentielle.
-  temps_seq = temps_moyen(NB_REPETITIONS) { resampler.send(methode, nb_threads ) }
+  temps_seq = temps_moyen(NB_REPETITIONS) { resampler.send(methode ) }
   print "%#{largeur}.3f" % temps_seq
 
   # On execute les versions paralleles.
