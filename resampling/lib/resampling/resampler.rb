@@ -38,7 +38,7 @@ class Resampler
 
   def process_peach_dynamic( granularity = 1 )
     set_nb_threads( PRuby.nb_threads )
-    image_destination.samples.peach( dynamic: granularity, nb_threads: @nb_threads ) do |s|
+    image_destination.samples.peach( dynamic: granularity ) do |s|
       interpolate( s )
     end
   end
