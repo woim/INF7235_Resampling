@@ -5,7 +5,7 @@ require_relative '../resampling'
 
 filename='./benchmark_result.csv'
 File.open(filename)
-FILE_HANDLE = File.open(filename)
+FILE_HANDLE = File.open(filename, 'w')
 
 def print_file(string)
   print string
