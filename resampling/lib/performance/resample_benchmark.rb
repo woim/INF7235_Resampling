@@ -1,5 +1,5 @@
 require_relative 'time_tracking'
-require_relative '../../lib/resampling/resampler'
+require_relative '../resampling/resampler'
 require_relative '../resampling'
 
 #
