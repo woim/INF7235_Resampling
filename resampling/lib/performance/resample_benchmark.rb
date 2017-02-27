@@ -29,7 +29,7 @@ NB_REPETITIONS = 5
 #####
 
 ROTATION = 180
-TRANSLATION = 20.map { |e| e.to_f }
+TRANSLATION = [20]
 
 ###############################################################
 # Methodes *paralleles* a 'benchmarker'.  La version sequentielle est
