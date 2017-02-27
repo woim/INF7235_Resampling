@@ -2,6 +2,15 @@ require 'benchmark'
 require_relative 'time_tracking'
 require_relative '../resampling/resampler'
 require_relative '../resampling'
+$file = nil
+
+File.open("benchmark_result.csv", 'w') { |f| $file = f }
+
+
+def print_file(string)
+  print string
+  $file.write(string)
+end
 
 #
 # Programme pour mesurer les performances des diverses versions du
@@ -67,9 +76,8 @@ puts "# AVEC_GC = #{AVEC_GC}"
 # On imprime les en-tetes de colonnes.
 largeur = (METHODES.map(&:size).max || 4)+ 3
 
-print "#"
 ["nb.th.", "seq", *METHODES].each do |x|
-  print x.rjust(largeur)
+  print_file "#{x},"
 end
 puts
 
@@ -83,19 +91,19 @@ end
 
 # On mesure et on imprime le temps des diverses versions.
 NB_THREADS.each do |nb_threads|
-  print " %#{largeur}d" % nb_threads
+  print_file "#{nb_threads},"
 
   methode = "process_sequential"
 
   # On execute la version sequentielle.
   temps_seq = temps_moyen(NB_REPETITIONS) { resampler.send(methode ) }
-  print "%#{largeur}.3f" % temps_seq
+  print_file "#{temps_seq},"
 
   # On execute les versions paralleles.
   METHODES.each do |methode|
 
     temps_par = temps_moyen(NB_REPETITIONS) { resampler.send(methode, nb_threads ) }
-    print "%#{largeur}.3f" % temps_par
+    print "#{temps_par},"
 
   end
   puts
