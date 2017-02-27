@@ -22,7 +22,7 @@ NB_THREADS = [8,16,32,64,128]
 ###############################################################
 AVEC_GC=false
 NB_WARMUP = 10
-NB_REPETITIONS = 5
+NB_REPETITIONS = 2
 
 
 #####
@@ -86,20 +86,15 @@ NB_THREADS.each do |nb_threads|
   print " %#{largeur}d" % nb_threads
 
   # On execute la version sequentielle.
-
-  # GC.start
-
-  # nb_ok = nil
-  # temps_seq = temps_moyen(NB_REPETITIONS) { nb_ok = a.nb_inversions }
-  # print "%#{largeur}.3f" % temps_seq
+  temps_seq = temps_moyen(NB_REPETITIONS) { resampler.send(methode, nb_threads ) }
+  print "%#{largeur}.3f" % temps_seq
 
   # On execute les versions paralleles.
   METHODES.each do |methode|
-    # NB_WARMUP.times { resampler.send(methode, nb_threads )  }
 
-    # GC.start
     temps_par = temps_moyen(NB_REPETITIONS) { resampler.send(methode, nb_threads ) }
     print "%#{largeur}.3f" % temps_par
+
   end
   puts
 end
