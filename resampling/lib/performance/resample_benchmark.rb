@@ -26,7 +26,7 @@ end
 # - TAILLE [Fixnum] Taille du tableau a generer et traiter
 #
 IMAGES = ['image_small.png', 'image_medium.png', 'image_large.png']
-NB_THREADS = [8]
+NB_THREADS = [1,2,4,8,16,32,64,128]
 
 ###############################################################
 # Nombre de fois ou on repete l'execution.
