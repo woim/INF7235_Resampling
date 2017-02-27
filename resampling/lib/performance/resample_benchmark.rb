@@ -1,15 +1,13 @@
 require 'benchmark'
+require 'csv'
 require_relative 'time_tracking'
 require_relative '../resampling/resampler'
 require_relative '../resampling'
 
-filename='./benchmark_result.csv'
-File.open(filename)
-FILE_HANDLE = File.open(filename, 'w')
-
-def print_file(string)
-  print string
-  FILE_HANDLE.write(string)
+def append_csv(arr)
+  CSV.open('./benchmark_result.csv', "a+") do |csv|
+    csv << arr
+  end
 end
 
 #
@@ -91,22 +89,22 @@ end
 
 # On mesure et on imprime le temps des diverses versions.
 NB_THREADS.each do |nb_threads|
-  print_file "#{nb_threads},"
+  results = [nb_threads]
 
   methode = "process_sequential"
 
   # On execute la version sequentielle.
   temps_seq = temps_moyen(NB_REPETITIONS) { resampler.send(methode ) }
-  print_file "#{temps_seq},"
+  results << temps_seq
 
   # On execute les versions paralleles.
   METHODES.each do |methode|
 
     temps_par = temps_moyen(NB_REPETITIONS) { resampler.send(methode, nb_threads ) }
-    print "#{temps_par},"
-
+    results << temps_par
   end
-  print_file '\r\n'
+
+  append_csv results
 end
 
 FILE_HANDLE.close()
