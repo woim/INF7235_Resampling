@@ -51,8 +51,6 @@ class Resampler
                                    )
   end
 
-	private 
-
 	def process( samples )
 		samples.each do |p|
       interpolate( p )
