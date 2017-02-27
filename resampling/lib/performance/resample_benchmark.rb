@@ -74,10 +74,7 @@ puts "# AVEC_GC = #{AVEC_GC}"
 # On imprime les en-tetes de colonnes.
 largeur = (METHODES.map(&:size).max || 4)+ 3
 
-["nb.th.", "seq", *METHODES].each do |x|
-  print_file "#{x},"
-end
-print_file '\r\n'
+append_csv ["nb.th.", "seq", *METHODES]
 
 resampler = Resampler.create do |r|
   r.source_filename = './image_small.png'
