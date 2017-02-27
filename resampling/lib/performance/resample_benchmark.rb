@@ -4,8 +4,12 @@ require_relative 'time_tracking'
 require_relative '../resampling/resampler'
 require_relative '../resampling'
 
+BENCHMARKING_RESULT_FILE_PATH = './benchmark_result.csv'
+
+File.delete(BENCHMARKING_RESULT_FILE_PATH) if File.exist?(BENCHMARKING_RESULT_FILE_PATH)
+
 def append_csv(arr)
-  CSV.open('./benchmark_result.csv', "a+") do |csv|
+  CSV.open(BENCHMARKING_RESULT_FILE_PATH, "a+") do |csv|
     csv << arr
   end
 end
@@ -103,5 +107,3 @@ NB_THREADS.each do |nb_threads|
 
   append_csv results
 end
-
-FILE_HANDLE.close()
