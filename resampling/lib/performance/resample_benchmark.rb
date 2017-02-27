@@ -29,15 +29,7 @@ NB_REPETITIONS = 5
 #####
 
 ROTATION = 180
-TRANSLATION = 20
-
-###############################################################
-# Pour verifier les resultats produits par la version parallele: si
-# true, on verifie que le resultat est le meme que pour la methode
-# sequentielle.
-###############################################################
-AVEC_VERIFICATION = true # && false
-
+TRANSLATION = 20.map { |e| e.to_f }
 
 ###############################################################
 # Methodes *paralleles* a 'benchmarker'.  La version sequentielle est
@@ -45,6 +37,7 @@ AVEC_VERIFICATION = true # && false
 # au debut de chaque ligne, pour permettre les mesures ulterieures
 # d'acceleration.
 ###############################################################
+
 METHODES = ['process_sequential', 'process_pcall', 'process_peach', 'process_peach_dynamic']
 
 ###############################################################
