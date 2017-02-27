@@ -68,11 +68,6 @@ end
 # Les benchmarks.
 ###############################################################
 
-  resampler.process_peach( nb_threads )
-  resampler.image_destination.save(global_options[:output])
-
-
-
 # On imprime l'information sur les parametres d'execution
 puts "# NB_WARMPUP = #{NB_WARMUP}"
 puts "# NB_REPETITIONS = #{NB_REPETITIONS}"

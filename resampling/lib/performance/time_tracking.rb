@@ -1,4 +1,4 @@
-require 'util/time_tracker'
+require_relative '../util/time_tracker'
 
 class TimeTracking
   def self.load
