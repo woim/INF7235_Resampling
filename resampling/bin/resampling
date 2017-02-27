@@ -83,11 +83,28 @@ command :parallel_pcall do |c|
   end
 end
 
-desc 'Describe parallel_data here'
-arg_name 'Describe arguments to parallel_data here'
-command :parallel_data do |c|
+desc 'Describe parallel_peach here'
+arg_name 'Describe arguments to parallel_loop here'
+command :parallel_peach do |c|
+  c.desc 'Specify the number of threads to use'
+  c.flag [:n,:nb_threads]
+
   c.action do |global_options,options,args|
-    puts "parallel_data command ran"
+
+    rotation = global_options[:rotation].to_f
+    translation = global_options[:translation].map { |e| e.to_f }
+    nb_threads = ( options[:nb_threads].to_i == 0 ) ? PRuby.nb_threads : options[:nb_threads].to_i 
+    
+    resampler = Resampler.create do |r|
+        r.source_filename = global_options[:input]
+        r.image_source = Image.new
+        r.image_destination = Image.new
+        r.transform = Transform.new(rotation,translation)
+    end
+
+    resampler.process_peach( nb_threads )
+    resampler.image_destination.save(global_options[:output])
+
   end
 end
 
