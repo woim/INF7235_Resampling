@@ -92,8 +92,8 @@ NB_THREADS.each do |nb_threads|
   # GC.start
 
   # nb_ok = nil
-  # temps_seq = temps_moyen(NB_REPETITIONS) { nb_ok = a.nb_inversions }
-  # print "%#{largeur}.3f" % temps_seq
+  temps_seq = temps_moyen(NB_REPETITIONS) { nb_ok = a.nb_inversions }
+  print "%#{largeur}.3f" % temps_seq
 
   # On execute les versions paralleles.
   METHODES.each do |methode|
