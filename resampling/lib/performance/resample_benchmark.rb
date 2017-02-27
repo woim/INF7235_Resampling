@@ -1,3 +1,4 @@
+require 'benchmark'
 require_relative 'time_tracking'
 require_relative '../resampling/resampler'
 require_relative '../resampling'
@@ -49,10 +50,7 @@ def temps_moyen( nb_fois, &block )
 
   tot = 0
   nb_fois.times do
-    GC.start
-    GC.disable unless AVEC_GC
     tot += (Benchmark.measure &block).real
-    GC.enable
   end
   tot / nb_fois
 end
@@ -92,8 +90,8 @@ NB_THREADS.each do |nb_threads|
   # GC.start
 
   # nb_ok = nil
-  temps_seq = temps_moyen(NB_REPETITIONS) { nb_ok = a.nb_inversions }
-  print "%#{largeur}.3f" % temps_seq
+  # temps_seq = temps_moyen(NB_REPETITIONS) { nb_ok = a.nb_inversions }
+  # print "%#{largeur}.3f" % temps_seq
 
   # On execute les versions paralleles.
   METHODES.each do |methode|
