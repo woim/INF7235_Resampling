@@ -21,8 +21,7 @@ NB_THREADS = [1,2,4,8,16,32,64,128];
 ###############################################################
 AVEC_GC=false
 NB_WARMUP = 10
-NB_REPETITIONS_DEFAUT = 5
-NB_REPETITIONS = ENV['NB_REPETITIONS'] ? ENV['NB_REPETITIONS'].to_i : NB_REPETITIONS_DEFAUT
+NB_REPETITIONS = 5
 
 
 #####
