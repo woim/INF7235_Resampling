@@ -15,7 +15,7 @@ require_relative '../resampling'
 # - TAILLE [Fixnum] Taille du tableau a generer et traiter
 #
 IMAGES = ['image_small.png', 'image_medium.png', 'image_large.png']
-NB_THREADS = [1,2,4,8,16,32,64,128]
+NB_THREADS = [8,16,32,64,128]
 
 ###############################################################
 # Nombre de fois ou on repete l'execution.
@@ -39,7 +39,7 @@ TRANSLATION = [20, 10]
 # d'acceleration.
 ###############################################################
 
-METHODES = ['process_pcall', 'process_peach', 'process_peach_dynamic']
+METHODES = ['process_pcall', 'process_peach']
 
 ###############################################################
 # Execution repetitive pour calcul de temps moyen.
@@ -95,7 +95,7 @@ NB_THREADS.each do |nb_threads|
 
   # On execute les versions paralleles.
   METHODES.each do |methode|
-    NB_WARMUP.times { resampler.send(methode, nb_threads )  }
+    # NB_WARMUP.times { resampler.send(methode, nb_threads )  }
 
     # GC.start
     temps_par = temps_moyen(NB_REPETITIONS) { resampler.send(methode, nb_threads ) }
