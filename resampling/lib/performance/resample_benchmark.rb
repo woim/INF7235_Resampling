@@ -28,8 +28,8 @@ NB_REPETITIONS = 5
 # TRANSFORMATION
 #####
 
-ROTATION = 180
-TRANSLATION = [20]
+ROTATION = 5
+TRANSLATION = [20, 10]
 
 ###############################################################
 # Methodes *paralleles* a 'benchmarker'.  La version sequentielle est
