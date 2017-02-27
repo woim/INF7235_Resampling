@@ -68,8 +68,8 @@ command :parallel_pcall do |c|
 
     rotation = global_options[:rotation].to_f
     translation = global_options[:translation].map { |e| e.to_f }
-    nb_threads = options[:nb_threads].to_i 
-
+    nb_threads = ( options[:nb_threads].to_i == 0 ) ? PRuby.nb_threads : options[:nb_threads].to_i 
+    
     resampler = Resampler.create do |r|
         r.source_filename = global_options[:input]
         r.image_source = Image.new
