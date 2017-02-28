@@ -51,11 +51,10 @@ class Resampler
 						     	lambda do |t|
                     index = @slice_index[t]
   	                samples = @image_destination.samples.slice( index[0], index[1] )
-	  								reduced_list[t] = select_pixels( samples ) 
+                    reduced_list[t] = select_pixels( samples ) 
 	 	     					end
 		   				 )  
     reduced_list.peach( dynamic: true ) do |list_pixels|
-      puts 'reduced_list size: ' + list_pixels.size.to_s
       process( list_pixels )
     end  
   end
@@ -104,8 +103,8 @@ class Resampler
     pixels_selected = []
     array_pixels.each do |p|
       src_coord = @transform.transform_point( p )
-      puts src_coord.to_s + ' ' + @image_source.point_inside?( src_coord ).to_s
-      pixels_selected.push( p ) if @image_source.point_inside?( src_coord )
+      pixels_selected << p if @image_source.point_inside?( src_coord ) 
     end
+    pixels_selected
   end
 end
