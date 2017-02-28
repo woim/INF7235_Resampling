@@ -67,8 +67,6 @@ class Resampler
                                    )
   end
 
-	private 
-
 	def process( samples )
 		samples.each do |p|
       interpolate( p )
@@ -83,7 +81,6 @@ class Resampler
   def set_nb_threads( nb_threads )
     @nb_threads = ( nb_threads > @image_destination.samples.size ) ? \
                       @iage_destination.smaples.size : nb_threads 
-    puts "Number of threads: " + @nb_threads.to_s     
   end
 
   def set_slices_index
