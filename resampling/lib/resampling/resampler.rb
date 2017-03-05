@@ -54,9 +54,9 @@ class Resampler
                     reduced_list[t] = select_pixels( samples ) 
 	 	     					end
 		   				 )  
-    reduced_list.peach( dynamic: true ) do |list_pixels|
+	  reduced_list.peach( dynamic: true ) do |list_pixels|  
       process( list_pixels )
-    end  
+    end
   end
 
   def create_images
@@ -80,7 +80,7 @@ class Resampler
 
   def set_nb_threads( nb_threads )
     @nb_threads = ( nb_threads > @image_destination.samples.size ) ? \
-                      @iage_destination.smaples.size : nb_threads 
+                      @image_destination.samples.size : nb_threads 
   end
 
   def set_slices_index
