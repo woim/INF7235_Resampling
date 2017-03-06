@@ -15,6 +15,10 @@ task :unit_tests => [ :test_image,
 task :run do
   sh %{bin/resampling}
 end
+
+task :measure do
+  sh %{cd lib/performance; ruby resample_benchmark.rb}
+end
 ########################################################################
 
 
